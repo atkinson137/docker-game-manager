@@ -1,5 +1,21 @@
 {
     "servers": [
-      { "id": 1, "title": "json-server", "game": "ark" }
+      { "id": 1, "title": "Ark Public", "game": "ark" },
+      { "id": 2, "title": "Factorio Public", "game": "factorio" },
+      { "id": 3, "title": "Factorio Private", "game": "factorio" }
+    ],
+    "stats": [
+      { "id": 1, "serverId": 1, "stats": [
+        { "id": 1, "name": "cpu", "value": 50 },
+        { "id": 2, "name": "ram", "value": 20 }
+      ] },
+      { "id": 2, "serverId": 2, "stats": [
+        { "id": 1, "name": "cpu", "value": 1 },
+        { "id": 2, "name": "ram", "value": 1 }
+      ] },
+      { "id": 3, "serverId": 3, "stats": [
+        { "id": 1, "name": "cpu", "value": 5 },
+        { "id": 2, "name": "ram", "value": 10 }
+      ] }
     ]
 }

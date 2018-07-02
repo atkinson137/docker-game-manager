@@ -23,5 +23,11 @@ export default {
   },
   getServers () {
     return this.execute('get', '/servers')
+  },
+  getServer (id) {
+    return this.execute('get', '/servers/' + id)
+  },
+  getStats (id) {
+    return this.execute('get', '/servers/' + id + '/stats')
   }
 }
