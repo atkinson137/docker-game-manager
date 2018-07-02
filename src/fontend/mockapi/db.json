@@ -1,0 +1,5 @@
+{
+    "servers": [
+      { "id": 1, "title": "json-server", "game": "ark" }
+    ]
+}
