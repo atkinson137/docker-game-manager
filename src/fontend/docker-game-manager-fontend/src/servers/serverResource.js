@@ -15,5 +15,8 @@ export default {
   },
   getStats (id) {
     return serverService.getStats(id)
+  },
+  getGames () {
+    return serverService.getGames()
   }
 }

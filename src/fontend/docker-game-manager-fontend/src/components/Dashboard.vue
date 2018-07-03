@@ -18,36 +18,16 @@
       <b-row>
         <b-col>
           <b-alert :show="loading" variant="info">Loading...</b-alert>
-          <table class="table table-striped" v-if="!loading">
-              <thead>
-                  <tr>
-                      <th>ID</th>
-                      <th>Server Name</th>
-                      <th>Game</th>
-                      <th>Edit</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="server in servers" :key="server.id">
-                    <td>{{server.id}}</td>
-                    <td>{{server.title}}</td>
-                    <td>{{server.game}}</td>
-                    <td><b-link :href="'/servers/edit/' + server.id">Edit</b-link></td>
-                  </tr>
-              </tbody>
-          </table>
+          <b-table hover striped :items="serverList" :fields="serverListFields">
+            <template slot="edit" slot-scope="data">
+              <a :href="data.value">Edit</a>
+            </template>
+          </b-table>
         </b-col>
       </b-row>
     </b-container>
   </div>
 </template>
-
-<style>
-  div.row {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-</style>
 
 <script>
 import serverResource from '@/servers/serverResource'
@@ -56,7 +36,13 @@ export default {
     return {
       loading: false,
       servers: [],
-      model: {}
+      model: {},
+      serverListFields: [
+        { key: 'id', sortable: true },
+        { key: 'serverName', sortable: true },
+        { key: 'game', sortable: true },
+        'edit'
+      ]
     }
   },
   async created () {
@@ -67,6 +53,18 @@ export default {
       this.loading = true
       this.servers = await serverResource.getServers()
       this.loading = false
+    },
+    log (item) {
+      console.log(item)
+    }
+  },
+  computed: {
+    serverList () {
+      var serverRows = []
+      this.servers.forEach(function (e) {
+        serverRows.push({ id: e.id, serverName: e.title, game: e.game.toUpperCase(), edit: '/servers/edit/' + e.id })
+      })
+      return serverRows
     }
   }
 }

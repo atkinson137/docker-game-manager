@@ -17,5 +17,9 @@
         { "id": 1, "name": "cpu", "value": 5 },
         { "id": 2, "name": "ram", "value": 10 }
       ] }
+    ],
+    "games": [
+      { "id": 1, "name": "ark", "dockerImage": "hello-world" },
+      { "id": 2, "name": "factorio", "dockerImage": "hello-world" }
     ]
 }

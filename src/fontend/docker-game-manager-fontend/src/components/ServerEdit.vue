@@ -51,25 +51,6 @@
   </div>
 </template>
 
-<style>
-  .progress {
-    background-color: #00000061
-  }
-
-  .modal-footer > div > button {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-  .outline {
-    border: 1px solid grey;
-    border-radius: 16px;
-    padding: 10px;
-    margin: 10px;
-    background-color: lightgrey;
-  }
-</style>
-
 <script>
 import serverResource from '@/servers/serverResource'
 export default {

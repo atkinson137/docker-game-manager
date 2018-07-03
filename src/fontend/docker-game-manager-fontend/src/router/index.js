@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Dashboard from '@/components/Dashboard'
 import ServerEdit from '@/components/ServerEdit'
 import ServerNew from '@/components/ServerNew'
+import ServerSettings from '@/components/ServerSettings'
 import Integrations from '@/components/Integrations'
 import Auth from '@okta/okta-vue'
 
@@ -38,6 +39,15 @@ let router = new Router({
       meta: {
         requiresAuth: true,
         title: 'RatNestSM - Dashboard'
+      }
+    },
+    {
+      path: '/server-settings',
+      name: 'ServerSettings',
+      component: ServerSettings,
+      meta: {
+        requiresAuth: true,
+        title: 'RatNestSM - Server Settings'
       }
     },
     {

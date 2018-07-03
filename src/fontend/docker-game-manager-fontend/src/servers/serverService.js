@@ -30,5 +30,8 @@ export default {
   },
   getStats (id) {
     return execute('get', '/servers/' + id + '/stats')
+  },
+  getGames () {
+    return execute('get', '/games')
   }
 }
