@@ -1,0 +1,1 @@
+This is the go application that will manage the docker instances

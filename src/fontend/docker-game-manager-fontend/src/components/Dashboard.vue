@@ -12,35 +12,45 @@
       </template>
     </b-jumbotron>
     <b-container>
-      <b-alert :show="loading" variant="info">Loading...</b-alert>
       <b-row>
-          <b-col>
-              <table class="table table-striped">
-                  <thead>
-                      <tr>
-                          <th>ID</th>
-                          <th>Server Name</th>
-                          <th>Game</th>
-                          <th>Edit</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="server in servers" :key="server.id">
-                        <td>{{server.id}}</td>
-                        <td>{{server.title}}</td>
-                        <td>{{server.game}}</td>
-                        <td><b-link :href="'/servers/edit/' + server.id">Edit</b-link></td>
-                      </tr>
-                  </tbody>
-              </table>
-          </b-col>
+        <b-btn :size="'sm'" variant="primary" href="/servers/new">Create New Server</b-btn>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-alert :show="loading" variant="info">Loading...</b-alert>
+          <table class="table table-striped" v-if="!loading">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Server Name</th>
+                      <th>Game</th>
+                      <th>Edit</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="server in servers" :key="server.id">
+                    <td>{{server.id}}</td>
+                    <td>{{server.title}}</td>
+                    <td>{{server.game}}</td>
+                    <td><b-link :href="'/servers/edit/' + server.id">Edit</b-link></td>
+                  </tr>
+              </tbody>
+          </table>
+        </b-col>
       </b-row>
     </b-container>
   </div>
 </template>
 
+<style>
+  div.row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+</style>
+
 <script>
-import api from '@/api'
+import serverResource from '@/servers/serverResource'
 export default {
   data () {
     return {
@@ -55,7 +65,7 @@ export default {
   methods: {
     async rerfreshServers () {
       this.loading = true
-      this.servers = await api.getServers()
+      this.servers = await serverResource.getServers()
       this.loading = false
     }
   }

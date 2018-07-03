@@ -7,6 +7,7 @@
         <b-navbar-nav>
           <b-nav-item to="/">Home</b-nav-item>
           <b-nav-item to="/dashboard">Dashboard</b-nav-item>
+          <b-nav-item to="/integrations">Integrations</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="#" @click.prevent="login" v-if="!activeUser">Login</b-nav-item>

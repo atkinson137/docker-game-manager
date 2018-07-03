@@ -1,0 +1,2 @@
+This is intended to be the interface point for the front end. This will grab data from the db to render the front end as well as making backend calls to the go-docker-manager.
+I might implement this in C#?

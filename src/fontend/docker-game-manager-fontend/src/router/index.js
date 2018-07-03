@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Dashboard from '@/components/Dashboard'
 import ServerEdit from '@/components/ServerEdit'
+import ServerNew from '@/components/ServerNew'
+import Integrations from '@/components/Integrations'
 import Auth from '@okta/okta-vue'
 
 Vue.use(Auth, {
@@ -39,6 +41,15 @@ let router = new Router({
       }
     },
     {
+      path: '/integrations',
+      name: 'Integrations',
+      component: Integrations,
+      meta: {
+        requiresAuth: true,
+        title: 'RatNestSM - Integrations'
+      }
+    },
+    {
       path: '/servers/edit/:id',
       name: 'ServerEdit',
       component: ServerEdit,
@@ -46,6 +57,15 @@ let router = new Router({
       meta: {
         requiresAuth: true,
         title: 'RatNestSM - Edit Server'
+      }
+    },
+    {
+      path: '/servers/new',
+      name: 'ServerNew',
+      component: ServerNew,
+      meta: {
+        requiresAuth: true,
+        title: 'RatNestSM - New Server'
       }
     }
   ]
