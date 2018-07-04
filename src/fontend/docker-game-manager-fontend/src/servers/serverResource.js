@@ -18,5 +18,9 @@ export default {
   },
   getGames () {
     return serverService.getGames()
+  },
+  setServerInfo (id, newInfo) {
+    console.log(newInfo)
+    return serverService.setServerInfo(id, newInfo)
   }
 }

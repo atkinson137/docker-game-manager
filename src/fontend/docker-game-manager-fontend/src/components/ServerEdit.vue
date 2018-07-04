@@ -40,7 +40,7 @@
             <b-collapse id="serverInfoCollapse" class="mt-2">
               <b-form>
                 <b-form-group id="serverNameGroup" label="Server Name" label-for="serverNameInput" description="The human-readable name">
-                  <b-form-input id="serverNameInput" type="text" v-model="serverNewInfo.name" placeholder="New Server Name"></b-form-input>
+                  <b-form-input id="serverNameInput" type="text" v-model="serverNewInfo.title" placeholder="New Server Name"></b-form-input>
                 </b-form-group>
               </b-form>
             </b-collapse>
@@ -60,9 +60,7 @@ export default {
       loading: false,
       serverData: [ { 'id': 1, 'serverId': 1, 'stats': [ { 'id': 1, 'name': 'cpu', 'value': 0 }, { 'id': 2, 'name': 'ram', 'value': 0 } ] } ],
       serverInfo: { 'id': 1, 'title': '', 'game': '' },
-      serverNewInfo: {
-        name: ''
-      }
+      serverNewInfo: { 'id': 1, 'title': '', 'game': '' }
     }
   },
   async created () {
@@ -73,6 +71,12 @@ export default {
       this.loading = true
       this.serverInfo = await serverResource.getServer(this.id)
       this.serverData = await serverResource.getStats(this.id)
+      this.serverNewInfo = this.serverInfo
+      this.loading = false
+    },
+    async setServerInfo () {
+      this.loading = true
+      await serverResource.setServerInfo(this.id, this.serverNewInfo)
       this.loading = false
     }
   }

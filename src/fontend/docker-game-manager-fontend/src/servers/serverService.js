@@ -33,5 +33,8 @@ export default {
   },
   getGames () {
     return execute('get', '/games')
+  },
+  setServerInfo (id, newServerInfo) {
+    return execute('post', '/servers/' + id, newServerInfo)
   }
 }
