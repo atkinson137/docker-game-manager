@@ -1,6 +1,11 @@
 <template>
   <div>
     <b-container>
+      <b-alert variant="success" :show="success.show" dismissable @dismissed="success.curTime = 0" @dismiss-count-down="countDownChanged">
+        <p>{{success.message}}</p>
+        <b-progress variant="success" :max="success.maxTime" :value="success.curTime" height="4px">
+        </b-progress>
+      </b-alert>
       <b-jumbotron fluid>
         <template slot="header">
           Create New Server
@@ -29,6 +34,7 @@ export default {
   data () {
     return {
       loading: false,
+      success: { show: false, message: '', maxTime: 10, curTime: 0 },
       games: [ { 'id': 1, 'name': 'ark', 'dockerImage': 'hello-world' }, { 'id': 2, 'name': 'factorio', 'dockerImage': 'hello-world' } ],
       serverNewInfo: {
         name: '',
@@ -45,9 +51,22 @@ export default {
       this.games = await serverResource.getGames()
       this.loading = false
     },
-    submitNewServer (event) {
+    async submitNewServer (event) {
       event.preventDefault()
-      alert('made a new server')
+      this.loading = true
+      try {
+        await serverResource.postNewServer(this.serverNewInfo)
+        this.success.show = true
+        this.success.message = 'Server creation success'
+        this.success.curTime = this.success.maxTime
+      } catch (e) {
+        console.log(e)
+        alert('There was an error, check the log')
+      }
+      this.loading = false
+    },
+    countDownChanged (countDown) {
+      this.success.curTime = countDown
     }
   },
   computed: {

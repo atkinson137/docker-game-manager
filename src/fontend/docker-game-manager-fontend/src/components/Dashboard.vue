@@ -36,6 +36,7 @@ export default {
     return {
       loading: false,
       servers: [],
+      games: [],
       model: {},
       serverListFields: [
         { key: 'id', sortable: true },
@@ -52,6 +53,7 @@ export default {
     async rerfreshServers () {
       this.loading = true
       this.servers = await serverResource.getServers()
+      this.games = await serverResource.getGames()
       this.loading = false
     },
     log (item) {
@@ -62,7 +64,11 @@ export default {
     serverList () {
       var serverRows = []
       this.servers.forEach(function (e) {
-        serverRows.push({ id: e.id, serverName: e.title, game: e.game.toUpperCase(), edit: '/servers/edit/' + e.id })
+        this.games.forEach(function (game) {
+          if (game.id === e.gameId) {
+            serverRows.push({ id: e.id, serverName: e.title, game: game.name.toUpperCase(), edit: '/servers/edit/' + e.id })
+          }
+        })
       })
       return serverRows
     }
