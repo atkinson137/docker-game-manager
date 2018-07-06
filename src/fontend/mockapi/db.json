@@ -2,7 +2,7 @@
   "servers": [
     {
       "id": 1,
-      "title": "Test",
+      "title": "Ark Public",
       "gameId": 1
     },
     {
@@ -14,11 +14,6 @@
       "id": 3,
       "title": "Factorio Private",
       "gameId": 2
-    },
-    {
-      "name": "Hi Kat",
-      "gameId": 2,
-      "id": 4
     }
   ],
   "stats": [
@@ -75,12 +70,27 @@
     {
       "id": 1,
       "name": "ark",
-      "dockerImage": "hello-world"
+      "dockerImage": "hello-world3"
     },
     {
       "id": 2,
       "name": "factorio",
       "dockerImage": "hello-world"
+    },
+    {
+      "name": "Minecraft",
+      "dockerImage": "theeternalrat/minecraft-windows:latest",
+      "id": 3
+    },
+    {
+      "name": "World of Warcraft",
+      "dockerImage": "theeternalrat/wow-windows:latest",
+      "id": 4
+    },
+    {
+      "name": "Overwatch",
+      "dockerImage": "blizzard/overwatch:latest",
+      "id": 5
     }
   ]
 }

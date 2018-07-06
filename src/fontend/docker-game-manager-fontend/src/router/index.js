@@ -4,7 +4,8 @@ import Home from '@/components/Home'
 import Dashboard from '@/components/Dashboard'
 import ServerEdit from '@/components/ServerEdit'
 import ServerNew from '@/components/ServerNew'
-import ServerSettings from '@/components/ServerSettings'
+import Games from '@/components/Games'
+import GameEdit from '@/components/GameEdit'
 import Integrations from '@/components/Integrations'
 import Auth from '@okta/okta-vue'
 
@@ -42,12 +43,22 @@ let router = new Router({
       }
     },
     {
-      path: '/server-settings',
-      name: 'ServerSettings',
-      component: ServerSettings,
+      path: '/games',
+      name: 'Games',
+      component: Games,
       meta: {
         requiresAuth: true,
-        title: 'RatNestSM - Server Settings'
+        title: 'RatNestSM - Games'
+      }
+    },
+    {
+      path: '/games/edit/:id',
+      name: 'GameEdit',
+      component: GameEdit,
+      props: true,
+      meta: {
+        requiresAuth: true,
+        title: 'RatNestSM - Edit Game'
       }
     },
     {

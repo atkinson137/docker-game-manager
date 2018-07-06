@@ -35,8 +35,16 @@ export default {
   data () {
     return {
       loading: false,
-      servers: [],
-      games: [],
+      servers: [{
+        id: 1,
+        title: 'Test',
+        gameId: 1
+      }],
+      games: [{
+        id: 1,
+        name: 'ark',
+        dockerImage: 'hello-world'
+      }],
       model: {},
       serverListFields: [
         { key: 'id', sortable: true },
@@ -62,13 +70,16 @@ export default {
   },
   computed: {
     serverList () {
+      var self = this
       var serverRows = []
-      this.servers.forEach(function (e) {
-        this.games.forEach(function (game) {
-          if (game.id === e.gameId) {
-            serverRows.push({ id: e.id, serverName: e.title, game: game.name.toUpperCase(), edit: '/servers/edit/' + e.id })
-          }
-        })
+      self.servers.forEach(function (e) {
+        if (self.games !== undefined) {
+          self.games.forEach(function (game) {
+            if (game.id === e.gameId) {
+              serverRows.push({ id: e.id, serverName: e.title, game: game.name.toUpperCase(), edit: '/servers/edit/' + e.id })
+            }
+          })
+        }
       })
       return serverRows
     }

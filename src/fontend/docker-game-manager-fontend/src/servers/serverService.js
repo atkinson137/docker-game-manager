@@ -39,5 +39,20 @@ export default {
   },
   postNewServer (newServerInfo) {
     return execute('post', '/servers', newServerInfo)
+  },
+  deleteServer (id) {
+    return execute('delete', '/servers/' + id)
+  },
+  postNewGame (newGameInfo) {
+    return execute('post', '/games', newGameInfo)
+  },
+  setGameInfo (id, gameInfo) {
+    return execute('put', '/games/' + id, gameInfo)
+  },
+  getGame (id) {
+    return execute('get', '/games/' + id)
+  },
+  deleteGame (id) {
+    return execute('delete', '/games/' + id)
   }
 }

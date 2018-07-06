@@ -6,13 +6,13 @@
       <b-container>
         <b-jumbotron fluid>
           <template slot="header">
-            Edit Server: {{serverInfo.title}}
+            Edit Server: {{gameInfo.title}}
           </template>
           <template slot="lead">
-            Running: {{serverInfo.game.toUpperCase()}}
+            Running: {{gameInfo.gameName}}
           </template>
           <hr class="my-4">
-          <b-container>
+          <b-container v-if="serverData.length > 0">
             <div v-for="stat in serverData[0].stats" :key="stat.id">
               <h5>{{stat.name.toUpperCase()}}</h5>
               <b-progress :max="stat.max" show-value>
@@ -31,8 +31,8 @@
             <b-modal id="removeServerModal" title="Remove Server">
               <p class="my-6">Are you sure you want to remove this server? You cannot undo this action, all non backed up data will be lost.</p>
               <div slot="modal-footer">
-                <b-btn size="sm" class="float-right" variant="primary">No</b-btn>
-                <b-btn size="sm" class="float-right" variant="danger">Yes</b-btn>
+                <b-btn size="sm" class="float-right" variant="primary" @click="hideServerModal">No</b-btn>
+                <b-btn size="sm" class="float-right" variant="danger" @click="deleteServer">Yes</b-btn>
               </div>
             </b-modal>
           </div>
@@ -63,9 +63,10 @@ export default {
       loading: false,
       error: false,
       errorText: '',
-      serverData: [ { 'id': 1, 'serverId': 1, 'stats': [ { 'id': 1, 'name': 'cpu', 'value': 0 }, { 'id': 2, 'name': 'ram', 'value': 0 } ] } ],
-      serverInfo: { 'id': 1, 'title': '', 'game': '' },
-      serverNewInfo: { 'id': 1, 'title': '', 'game': '' }
+      serverData: [],
+      serverInfo: { 'id': 1, 'title': '', 'gameId': 1 },
+      serverNewInfo: { 'id': 1, 'title': '', 'game': '' },
+      games: [{ id: 1, name: 'ark', dockerImage: 'hello-world' }]
     }
   },
   async created () {
@@ -74,6 +75,7 @@ export default {
   methods: {
     async refreshServerInfo () {
       this.loading = true
+      this.games = await serverResource.getGames()
       this.serverInfo = await serverResource.getServer(this.id)
       this.serverData = await serverResource.getStats(this.id)
       this.serverNewInfo = JSON.parse(JSON.stringify(this.serverInfo))
@@ -93,6 +95,26 @@ export default {
         this.errorText = e
       }
       this.loading = false
+    },
+    hideServerModal () {
+      this.$root.$emit('bv::hide::modal', 'removeServerModal')
+    },
+    async deleteServer () {
+      await serverResource.deleteServer(this.id)
+      this.$root.$emit('bv::hide::modal', 'removeServerModal')
+      this.$router.push({name: 'Dashboard'})
+    }
+  },
+  computed: {
+    gameInfo () {
+      var info = {}
+      info = JSON.parse(JSON.stringify(this.serverInfo))
+      this.games.forEach(function (e) {
+        if (e.id === info.id) {
+          info.gameName = e.name.toUpperCase()
+        }
+      })
+      return info
     }
   }
 }

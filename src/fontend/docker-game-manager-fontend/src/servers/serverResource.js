@@ -24,5 +24,20 @@ export default {
   },
   postNewServer (newInfo) {
     return serverService.postNewServer(newInfo)
+  },
+  deleteServer (id) {
+    return serverService.deleteServer(id)
+  },
+  addNewGame (newInfo) {
+    return serverService.postNewGame(newInfo)
+  },
+  setGameInfo (id, newInfo) {
+    return serverService.setGameInfo(id, newInfo)
+  },
+  getGame (id) {
+    return serverService.getGame(id)
+  },
+  deleteGame (id) {
+    return serverService.deleteGame(id)
   }
 }
