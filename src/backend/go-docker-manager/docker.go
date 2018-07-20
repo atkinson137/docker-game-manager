@@ -47,7 +47,7 @@ func dockerContainer(cli *docker.Client, mainlog *logging.Logger) {
 	dockerLog.SetLevel(logging.LevelInfo)
 	dockerLog.AddHandler(handler)
 
-	infoLog(&reader, &dockerLog)
+	infoLog(reader, &dockerLog)
 
 	// ensure all log messages are flushed to disk before program exits.
 	defer logging.Shutdown()

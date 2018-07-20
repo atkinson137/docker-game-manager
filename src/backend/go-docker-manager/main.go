@@ -41,16 +41,20 @@ func main() {
 	}
 
 	for _, container := range containers {
-		fmt.Printf("%s %s\n", container.ID[:10], container.Image)
+		str := fmt.Sprintf("%s %s\n", container.ID[:10], container.Image)
+
+		mainLog.Info(str)
 	}
+
+	mainLog.Info("Program end")
 }
 
 // infoLog takes a message and writes it to the given log
-func infoLog(message *io.Reader, logger *logging.Logger) {
-	scanner := bufio.NewScanner(*message)
+func infoLog(message io.Reader, logger *logging.Logger) {
+	scanner := bufio.NewScanner(message)
 	for scanner.Scan() {
 		text := scanner.Text()
-		(*logger).Infof("Docker message: %s", text)
+		(*logger).Info(text)
 	}
 
 	if err := scanner.Err(); err != nil {
