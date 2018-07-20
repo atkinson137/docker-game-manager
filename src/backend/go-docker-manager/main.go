@@ -1,26 +1,39 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"io"
-	"os"
+	"log"
 
 	"docker.io/go-docker"
 	"docker.io/go-docker/api/types"
-	"docker.io/go-docker/api/types/container"
+
+	"github.com/hhkbp2/go-logging"
 )
 
 // https://www.melvinvivas.com/learning-go-with-docker-sdk/
 
 func main() {
 
+	config_file := "./config/logging.yml"
+	if err := logging.ApplyConfigFile(config_file); err != nil {
+		panic(err.Error())
+	}
+
+	mainLog := logging.GetLogger("RNSM")
+
+	//ensure logs arre flushed on shutdown
+	defer logging.Shutdown()
+
+	mainLog.Info("Program startup")
 	cli, err := docker.NewEnvClient()
 	if err != nil {
 		panic(err)
 	}
 
-	bootContainer(cli, "hello-world")
+	dockerContainer(cli, &mainLog)
 
 	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
 	if err != nil {
@@ -32,25 +45,15 @@ func main() {
 	}
 }
 
-func bootContainer(cli *docker.Client, image string) {
-	closer, imgPullErr := cli.ImagePull(context.Background(), image, types.ImagePullOptions{})
-	io.Copy(os.Stdout, closer)
-
-	if imgPullErr != nil {
-		panic(imgPullErr)
+// infoLog takes a message and writes it to the given log
+func infoLog(message *io.Reader, logger *logging.Logger) {
+	scanner := bufio.NewScanner(*message)
+	for scanner.Scan() {
+		text := scanner.Text()
+		(*logger).Infof("Docker message: %s", text)
 	}
 
-	config := &container.Config{
-		Image: image,
-	}
-	body, err1 := cli.ContainerCreate(context.Background(), config, nil, nil, "")
-	if err1 != nil {
-		panic(err1)
-	}
-
-	err := cli.ContainerStart(context.Background(), body.ID, types.ContainerStartOptions{})
-	if err != nil {
-		//fmt.Println(err)
-		panic(err)
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
 	}
 }
