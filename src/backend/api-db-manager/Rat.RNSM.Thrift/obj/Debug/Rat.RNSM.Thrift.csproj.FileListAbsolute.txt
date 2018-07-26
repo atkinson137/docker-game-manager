@@ -1,0 +1,8 @@
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\obj\Debug\Rat.RNSM.Thrift.csprojResolveAssemblyReference.cache
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\obj\Debug\Rat.RNSM.Thrift.csproj.CoreCompileInputs.cache
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\bin\Debug\Rat.RNSM.Thrift.dll
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\bin\Debug\Rat.RNSM.Thrift.pdb
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\obj\Debug\Rat.RNSM.Thrift.csproj.CopyComplete
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\obj\Debug\Rat.RNSM.Thrift.dll
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\obj\Debug\Rat.RNSM.Thrift.pdb
+C:\Users\ProWorks\ryan\work\docker-game-manager\src\backend\api-db-manager\Rat.RNSM.Thrift\bin\Debug\Thrift.dll

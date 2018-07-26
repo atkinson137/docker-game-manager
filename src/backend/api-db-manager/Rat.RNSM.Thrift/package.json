@@ -1,0 +1,13 @@
+{
+  "name": "rat.rnsm.thrift",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Ryan Atkinson",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-exec": "^2.1.3",
+    "gulp-watch": "^4.3.11"
+  }
+}
