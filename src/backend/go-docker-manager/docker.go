@@ -13,8 +13,28 @@ import (
 	"github.com/hhkbp2/go-logging"
 )
 
-func dockerContainer(cli *docker.Client, mainlog *logging.Logger) {
-	imageName := "hello-world"
+type dockerContainer struct {
+	log       *logging.Logger
+	imageName string
+}
+
+func getCli() *docker.Client {
+	cli, err := docker.NewEnvClient()
+	if err != nil {
+		panic(err)
+	}
+	return cli
+}
+
+func getContainers(cli *docker.Client) []types.Container {
+	containerList, err := (*cli).ContainerList(context.Background(), types.ContainerListOptions{})
+	if err != nil {
+		panic(err)
+	}
+	return containerList
+}
+
+func makeContainer(cli *docker.Client, imageName string, mainlog *logging.Logger) *dockerContainer {
 	containerId, reader := bootContainer(cli, imageName, mainlog)
 
 	filePath := "./logs/docker/" + containerId + ".log"
@@ -49,11 +69,18 @@ func dockerContainer(cli *docker.Client, mainlog *logging.Logger) {
 
 	infoLog(reader, &dockerLog)
 
-	// ensure all log messages are flushed to disk before program exits.
-	defer logging.Shutdown()
+	dCont := dockerContainer{&dockerLog, imageName}
+
+	return &dCont
 }
 
 func bootContainer(cli *docker.Client, image string, mainlog *logging.Logger) (string, io.Reader) {
+	defer func() {
+		if r := recover(); r != nil {
+			(*mainlog).Errorf("BootContainer filed: %s", r)
+		}
+	}()
+
 	(*mainlog).Infof("Pulling container: %s", image)
 
 	closer, imgPullErr := cli.ImagePull(context.Background(), image, types.ImagePullOptions{})

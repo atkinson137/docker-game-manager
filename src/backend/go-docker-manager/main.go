@@ -2,13 +2,11 @@ package main
 
 import (
 	"bufio"
-	"context"
 	"fmt"
 	"io"
 	"log"
 
-	"docker.io/go-docker"
-	"docker.io/go-docker/api/types"
+	"git.apache.org/thrift.git/lib/go/thrift"
 
 	"github.com/hhkbp2/go-logging"
 )
@@ -17,6 +15,8 @@ import (
 
 func main() {
 
+	var containers []dockerContainer
+
 	config_file := "./config/logging.yml"
 	if err := logging.ApplyConfigFile(config_file); err != nil {
 		panic(err.Error())
@@ -24,29 +24,35 @@ func main() {
 
 	mainLog := logging.GetLogger("RNSM")
 
-	//ensure logs arre flushed on shutdown
+	//ensure logs are flushed on shutdown
 	defer logging.Shutdown()
 
 	mainLog.Info("Program startup")
-	cli, err := docker.NewEnvClient()
-	if err != nil {
-		panic(err)
-	}
 
-	dockerContainer(cli, &mainLog)
+	cli := getCli()
 
-	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
-	if err != nil {
-		panic(err)
-	}
+	cont := makeContainer(cli, "hello-world", &mainLog)
 
-	for _, container := range containers {
+	containers = append(containers, *cont)
+
+	containerList := getContainers(cli)
+
+	for _, container := range containerList {
 		str := fmt.Sprintf("%s %s\n", container.ID[:10], container.Image)
 
 		mainLog.Info(str)
 	}
 
-	mainLog.Info("Program end")
+	//mainLog.Info("Program end")
+
+	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
+	transportFactory := thrift.NewTTransportFactory()
+	addr := "localhost:9090"
+	secure := false //TODO: secure
+
+	if err := runServer(transportFactory, protocolFactory, addr, secure); err != nil {
+		mainLog.Errorf("Error running server: ", err)
+	}
 }
 
 // infoLog takes a message and writes it to the given log

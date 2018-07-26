@@ -26,6 +26,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "git.apache.org/thrift.git"
+  packages = ["lib/go/thrift"]
+  revision = "327ebb6c2b6df8bf075da02ef45a2a034e9b79ba"
+  version = "0.11.0"
+
+[[projects]]
   name = "github.com/Microsoft/go-winio"
   packages = ["."]
   revision = "67921128fb397dd80339870d2193d6b1e6856fd4"
@@ -60,6 +66,18 @@
   packages = ["proto"]
   revision = "100ba4e885062801d56799d78530b73b178a78f3"
   version = "v0.4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/hhkbp2/go-logging"
+  packages = ["."]
+  revision = "377ba05d98977baa2a0d9e13f13aac2f3a47ac4d"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/hhkbp2/go-strftime"
+  packages = ["."]
+  revision = "d82166ec6782f870431668391c2e321069632fe7"
 
 [[projects]]
   name = "github.com/opencontainers/go-digest"
@@ -99,9 +117,15 @@
   packages = ["windows"]
   revision = "7138fd3d9dc8335c567ca206f4333fb75eb05d56"
 
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "28384656b9f411752f675f50cb936414b092338396740567abf5dfbc567afcd4"
+  inputs-digest = "7fb8adf9ae5373bc7fb3438014d65aa8f06a1d2d98cd71f91c8b1a04f04de80c"
   solver-name = "gps-cdcl"
   solver-version = 1
